@@ -1,6 +1,6 @@
 import { ChartOptions } from './../../../../_models/chart/chartOptions';
 import { ChartData } from './../../../../_models/chart/chartData';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ChartType } from 'ng-apexcharts';
 
 @Component({
@@ -8,7 +8,7 @@ import { ChartType } from 'ng-apexcharts';
   templateUrl: './chart.component.html',
   styleUrls: ['./chart.component.scss']
 })
-export class ChartComponent implements OnInit {
+export class ChartComponent implements OnInit, OnChanges {
   @Input() height?: number;
   @Input() title?: string;
   @Input() pointText?: string;
@@ -55,5 +55,14 @@ export class ChartComponent implements OnInit {
         }
       }
     };
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (this.chartOptions && changes['data']) {
+      this.chartOptions.series = [{
+        name: this.pointText??"Line Point",
+        data: this.data?.map(data => data.value)??[]
+      }]
+    }
   }
 }

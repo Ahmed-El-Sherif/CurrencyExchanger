@@ -1,4 +1,4 @@
-import { GetSymbols } from '../../../_models/fixerAPI/getSymbols';
+import { GetLatest } from '../../../_models/fixerAPI/getLatest';
 import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -7,10 +7,10 @@ import { FixerService } from 'src/app/_services/fixer.service';
 @Injectable({
   providedIn: 'root'
 })
-export class SymbolsResolver implements Resolve<GetSymbols> {
+export class RatesResolver implements Resolve<GetLatest> {
   constructor(private fixerService: FixerService) { }
 
-  resolve(): Observable<GetSymbols> {
-    return this.fixerService.getSymbols();
+  resolve(): Observable<GetLatest> {
+    return this.fixerService.getLatest('EUR');
   }
 }
